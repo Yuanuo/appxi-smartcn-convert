@@ -5,7 +5,10 @@ import org.appxi.hanlp.util.dictionary.StringDictionary;
 import org.appxi.hanlp.util.trie.DoubleArrayTrieByAhoCorasick;
 import org.appxi.hanlp.util.trie.TrieHelper;
 import org.appxi.util.FileHelper;
+import org.appxi.util.StringHelper;
 
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
@@ -28,12 +31,16 @@ abstract class ChineseConvertorBase extends ChineseConvertor {
 
     @Override
     protected final void loadDictionaries(DoubleArrayTrieByAhoCorasick<String> trie) {
-        final String pathTxt = pathBase + id + ".txt";
-        final String pathBin = pathBase + id + ".bin";
+        final String pathTxt = StringHelper.concat(pathBase, id, ".txt");
+        final String pathBin = StringHelper.concat(pathBase, id, ".bin");
         Set<String> pathTxts = getReferencedFiles();
-        if (null == pathTxts) pathTxts = new HashSet<>();
+        if (null == pathTxts)
+            pathTxts = new HashSet<>();
         pathTxts.add(pathTxt);
-        final List<Path> fileTxts = HanlpHelper.ensureFilesExtracted(v -> getClass().getResourceAsStream("/" + v), pathTxts);
+        final List<Path> fileTxts = FileHelper.extractFiles(
+                file -> getClass().getResourceAsStream("/" + file),
+                HanlpHelper::resolveData,
+                pathTxts.toArray(new String[0]));
 
         // load from bin
         final Path fileBin = HanlpHelper.resolveCache(pathBin);
@@ -65,9 +72,13 @@ abstract class ChineseConvertorBase extends ChineseConvertor {
                                                                String... fileTxtNames) {
         StringDictionary dictionary = new StringDictionary("=");
         for (String fileTxtName : fileTxtNames) {
-            dictionary.load(HanlpHelper.ensureStream(HanlpHelper.resolveData(pathBase + fileTxtName)));
+            try (InputStream stream = Files.newInputStream(HanlpHelper.resolveData(StringHelper.concat(pathBase, fileTxtName)))) {
+                dictionary.load(stream);
+            } catch (Exception ignored) {
+            }
         }
-        if (reverse) dictionary = dictionary.reverse();
+        if (reverse)
+            dictionary = dictionary.reverse();
         dictionary.walkEntries(map::put);
         return map;
     }
