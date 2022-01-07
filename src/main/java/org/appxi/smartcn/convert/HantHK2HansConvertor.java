@@ -1,22 +1,22 @@
-package org.appxi.hanlp.convert;
+package org.appxi.smartcn.convert;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class HantTW2HansConvertor extends ChineseConvertorBase {
-    public static final HantTW2HansConvertor instance = new HantTW2HansConvertor();
+public class HantHK2HansConvertor extends ChineseConvertorBase {
+    public static final HantHK2HansConvertor instance = new HantHK2HansConvertor();
 
-    private HantTW2HansConvertor() {
-        super("tw2s", "台湾繁体转简体");
+    private HantHK2HansConvertor() {
+        super("hk2s", "香港繁体转简体");
     }
 
     @Override
     protected Set<String> getReferencedFiles() {
         return new HashSet<>(Arrays.asList(
                 pathBase + "t2s.txt",
-                pathBase + "t2tw.txt"
+                pathBase + "t2hk.txt"
         ));
     }
 
@@ -24,6 +24,6 @@ public class HantTW2HansConvertor extends ChineseConvertorBase {
     protected void loadMoreDictionaries(TreeMap<String, String> primaryMap) {
         loadTxtDictionary(primaryMap, false, "t2s.txt");
 
-        CombineUtil.combineReverse(primaryMap, loadTxtDictionary(true, "t2tw.txt"), true);
+        CombineUtil.combineReverse(primaryMap, loadTxtDictionary(true, "t2hk.txt"), true);
     }
 }

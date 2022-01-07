@@ -1,4 +1,4 @@
-package org.appxi.hanlp.convert;
+package org.appxi.smartcn.convert;
 
 import org.appxi.util.ext.HanLang;
 

@@ -1,9 +1,9 @@
-package org.appxi.hanlp.convert;
+package org.appxi.smartcn.convert;
 
-import org.appxi.hanlp.util.HanlpHelper;
-import org.appxi.hanlp.util.dictionary.StringDictionary;
-import org.appxi.hanlp.util.trie.DoubleArrayTrieByAhoCorasick;
-import org.appxi.hanlp.util.trie.TrieHelper;
+import org.appxi.smartcn.util.SmartCNHelper;
+import org.appxi.smartcn.util.dictionary.StringDictionary;
+import org.appxi.smartcn.util.trie.DoubleArrayTrieByAhoCorasick;
+import org.appxi.smartcn.util.trie.TrieHelper;
 import org.appxi.util.FileHelper;
 import org.appxi.util.StringHelper;
 
@@ -39,21 +39,25 @@ abstract class ChineseConvertorBase extends ChineseConvertor {
         pathTxts.add(pathTxt);
         final List<Path> fileTxts = FileHelper.extractFiles(
                 file -> getClass().getResourceAsStream("/" + file),
-                HanlpHelper::resolveData,
+                SmartCNHelper::resolveData,
                 pathTxts.toArray(new String[0]));
 
         // load from bin
-        final Path fileBin = HanlpHelper.resolveCache(pathBin);
+        final Path fileBin = SmartCNHelper.resolveCache(pathBin);
         if (!FileHelper.isTargetFileUpdatable(fileBin, fileTxts.toArray(new Path[0]))) {
             if (TrieHelper.loadObject(fileBin, trie))
                 return;
         }
         // load primary
         final TreeMap<String, String> primaryMap = new TreeMap<>();
-        final Path fileTxt = HanlpHelper.resolveData(pathTxt);
+        final Path fileTxt = SmartCNHelper.resolveData(pathTxt);
         if (FileHelper.exists(fileTxt)) {
             final StringDictionary dictionary = new StringDictionary("=");
-            dictionary.load(HanlpHelper.ensureStream(fileTxt));
+            try (InputStream stream = Files.newInputStream(fileTxt)) {
+                dictionary.load(stream);
+            } catch (Exception e) {
+                SmartCNHelper.logger.warn("", e);
+            }
             dictionary.walkEntries(primaryMap::put);
         }
         // load more
@@ -61,7 +65,7 @@ abstract class ChineseConvertorBase extends ChineseConvertor {
         // build to trie
         long st = System.currentTimeMillis();
         trie.build(primaryMap);
-        HanlpHelper.LOG.info("trie.build + " + (System.currentTimeMillis() - st));
+        SmartCNHelper.logger.info("trie.build + " + (System.currentTimeMillis() - st));
         // save to bin
         TrieHelper.saveObject(trie, primaryMap, fileBin);
     }
@@ -72,7 +76,7 @@ abstract class ChineseConvertorBase extends ChineseConvertor {
                                                                String... fileTxtNames) {
         StringDictionary dictionary = new StringDictionary("=");
         for (String fileTxtName : fileTxtNames) {
-            try (InputStream stream = Files.newInputStream(HanlpHelper.resolveData(StringHelper.concat(pathBase, fileTxtName)))) {
+            try (InputStream stream = Files.newInputStream(SmartCNHelper.resolveData(StringHelper.concat(pathBase, fileTxtName)))) {
                 dictionary.load(stream);
             } catch (Exception ignored) {
             }

@@ -1,4 +1,4 @@
-package org.appxi.hanlp.convert;
+package org.appxi.smartcn.convert;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,6 +1,7 @@
-package org.appxi.hanlp.convert;
+package org.appxi.smartcn.convert;
 
-import org.appxi.hanlp.util.trie.AbstractDictionaryTrieApp;
+
+import org.appxi.smartcn.util.trie.AbstractDictionaryTrieApp;
 
 public abstract class ChineseConvertor extends AbstractDictionaryTrieApp<String> {
     public final String name;

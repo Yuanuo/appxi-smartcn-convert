@@ -1,7 +1,7 @@
-module appxi.hanlp.convert {
+module appxi.smartcn.convert {
     requires java.logging;
     requires appxi.shared;
-    requires appxi.hanlp.shared;
+    requires appxi.smartcn.shared;
 
-    exports org.appxi.hanlp.convert;
+    exports org.appxi.smartcn.convert;
 }

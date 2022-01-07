@@ -1,15 +1,15 @@
-package org.appxi.hanlp.convert;
+package org.appxi.smartcn.convert;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class Hant2HantHKConvertor extends ChineseConvertorBase {
-    public static final Hant2HantHKConvertor instance = new Hant2HantHKConvertor();
+public class HantHK2HantConvertor extends ChineseConvertorBase {
+    public static final HantHK2HantConvertor instance = new HantHK2HantConvertor();
 
-    private Hant2HantHKConvertor() {
-        super("t2hk", "繁体转香港繁体");
+    private HantHK2HantConvertor() {
+        super("hk2t", "香港繁体转繁体");
     }
 
     @Override
@@ -21,6 +21,6 @@ public class Hant2HantHKConvertor extends ChineseConvertorBase {
 
     @Override
     protected void loadMoreDictionaries(TreeMap<String, String> primaryMap) {
-        loadTxtDictionary(primaryMap, false, "t2hk.txt");
+        loadTxtDictionary(primaryMap, true, "t2hk.txt");
     }
 }
