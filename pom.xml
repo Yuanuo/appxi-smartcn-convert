@@ -6,7 +6,7 @@
 
     <groupId>org.appxi</groupId>
     <artifactId>smartcn-convert</artifactId>
-    <version>22.01.01</version>
+    <version>22.02.01</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

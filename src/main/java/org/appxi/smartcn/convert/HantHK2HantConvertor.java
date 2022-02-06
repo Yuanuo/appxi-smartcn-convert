@@ -15,12 +15,12 @@ public class HantHK2HantConvertor extends ChineseConvertorBase {
     @Override
     protected Set<String> getReferencedFiles() {
         return new HashSet<>(Arrays.asList(
-                pathBase + "t2hk.txt"
+                "data-t2hk.txt"
         ));
     }
 
     @Override
     protected void loadMoreDictionaries(TreeMap<String, String> primaryMap) {
-        loadTxtDictionary(primaryMap, true, "t2hk.txt");
+        loadTxtDictionary(primaryMap, true, "data-t2hk.txt");
     }
 }
