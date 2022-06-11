@@ -6,7 +6,7 @@
 
     <groupId>org.appxi</groupId>
     <artifactId>smartcn-convert</artifactId>
-    <version>22.02.01</version>
+    <version>22.06.02</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,17 +17,19 @@
         <dependency>
             <groupId>org.appxi</groupId>
             <artifactId>smartcn-shared</artifactId>
-            <version>[1.0.0,)</version>
+            <version>[22.06.01,)</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.2.1</version>
                 <executions>

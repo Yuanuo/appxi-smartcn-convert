@@ -5,7 +5,6 @@ import org.appxi.smartcn.util.dictionary.StringDictionary;
 import org.appxi.smartcn.util.trie.DoubleArrayTrieByAhoCorasick;
 import org.appxi.smartcn.util.trie.TrieHelper;
 import org.appxi.util.FileHelper;
-import org.appxi.util.StringHelper;
 
 import java.io.InputStream;
 import java.nio.file.Files;
