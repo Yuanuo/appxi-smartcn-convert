@@ -1,5 +1,7 @@
 package org.appxi.smartcn.convert;
 
+import java.net.URL;
+import java.util.List;
 import java.util.TreeMap;
 
 public class Hans2HantConvertor extends ChineseConvertorBase {
@@ -10,6 +12,11 @@ public class Hans2HantConvertor extends ChineseConvertorBase {
     }
 
     @Override
-    protected void loadMoreDictionaries(TreeMap<String, String> primaryMap) {
+    protected List<URL> getDependencyTxtSources() {
+        return List.of();
+    }
+
+    @Override
+    protected void loadDependencyTxtSources(TreeMap<String, String> primaryMap) {
     }
 }

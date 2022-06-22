@@ -1,8 +1,8 @@
 package org.appxi.smartcn.convert;
 
+import java.net.URL;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.TreeMap;
 
 public class Hant2HantHKConvertor extends ChineseConvertorBase {
@@ -13,14 +13,14 @@ public class Hant2HantHKConvertor extends ChineseConvertorBase {
     }
 
     @Override
-    protected Set<String> getReferencedFiles() {
-        return new HashSet<>(Arrays.asList(
-                "data-t2hk.txt"
-        ));
+    protected List<URL> getDependencyTxtSources() {
+        return Arrays.asList(
+                getClass().getResource("data-t2hk.txt")
+        );
     }
 
     @Override
-    protected void loadMoreDictionaries(TreeMap<String, String> primaryMap) {
-        loadTxtDictionary(primaryMap, false, "data-t2hk.txt");
+    protected void loadDependencyTxtSources(TreeMap<String, String> primaryMap) {
+        loadTxtDictionary(primaryMap, false, getClass().getResource("data-t2hk.txt"));
     }
 }
